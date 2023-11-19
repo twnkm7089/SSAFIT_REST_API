@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.workout.dao.UserDao">
+
+	<!-- list -->
+	<select id="selectAllUsers" resultType="User">
+		SELECT  *
+		FROM user
+	</select>
+
+	<!-- login -->
+	<select id="login" parameterType="User" resultType="User">
+		SELECT id, userId, name, email
+		FROM user
+		WHERE userId = #{userId} AND password = #{password}
+	</select>
+
+	<!-- signup -->
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO user (userId, password, name, email)
+		VALUES (#{userId}, #{password}, #{name}, #{email})
+	</insert>
+
+	<!-- selectOne -->
+	<select id="selectOne" parameterType="String" resultType="User">
+		SELECT id, password, name
+		FROM user
+		WHERE id = #{id}
+	</select>
+</mapper>

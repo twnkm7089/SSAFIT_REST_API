@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.workout.dao.ReviewDao">
+
+	<!-- 리뷰 추가 -->
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO Review (Video_youtubeId, User_id, title, content)
+		VALUES (#{Video_youtubeId}, #{User_id}, #{title}, #{content})
+	</insert>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM Review
+		WHERE id = #{reviewId}
+	</delete>
+	
+	<!-- 리뷰 수정 -->
+	<update id="updateReview" parameterType="Review">
+		UPDATE Review
+		SET title = #{title}, content = #{content}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 리뷰 선택 -->
+	<select id="selectReview" parameterType="int" resultType="Review">
+		SELECT *
+		FROM Review
+		WHERE id = #{reviewId};
+	</select>
+	
+	<!-- 리뷰 조회수 증가 -->
+	<update id="updateReviewViewCnt" parameterType="int">
+		UPDATE Review
+		SET viewCnt = (viewCnt + 1)
+		WHERE id = #{reviewId}
+	</update>
+	
+	<!-- 비디오 상세, 모든 리뷰 돌려주기 -->
+	<select id = "selectVideoReview" parameterType="String" resultType="Review">
+		SELECT *
+		FROM Review
+		WHERE Video_youtubeId = #{youtubeId}
+	</select>
+	
+
+
+</mapper>

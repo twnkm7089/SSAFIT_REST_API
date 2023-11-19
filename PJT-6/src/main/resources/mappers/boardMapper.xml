@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.workout.dao.BoardDao">
+
+	<!-- 조회수 순 최대 다섯 개 선택 -->
+	<select id="selectInterestFitVideo" resultType="Video">
+		SELECT * FROM video
+		ORDER BY viewCnt DESC 
+		limit 5
+	</select>
+	
+	<!-- 검색 기능 -->
+	<select id="search" resultType="Video" parameterType="SearchCondition">
+		SELECT youtubeid, title, fitpartname, channelname, viewCnt
+		FROM video
+		<!-- 검색 조건 (동적쿼리)-->
+		<if test="key != 'none'">
+			WHERE ${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<!-- 어떤 기준으로 어떤 방향으로 정렬 -->
+		<if test="orderBy != 'none'">
+			ORDER BY ${orderBy} ${orderByDir}
+		</if>
+	</select>
+
+</mapper>
